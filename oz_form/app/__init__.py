@@ -3,6 +3,7 @@ from flask_migrate import Migrate
 
 import app.models
 from app.routes import routes
+from app.services.users import users_bp
 from config import db
 
 migrate = Migrate()
@@ -27,6 +28,7 @@ def create_app():
 
 		# 블루프린트 등록
     application.register_blueprint(routes)
+    application.register_blueprint(users_bp)
 
 
     return application
