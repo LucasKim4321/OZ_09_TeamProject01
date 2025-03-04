@@ -1,43 +1,36 @@
-from flask import Blueprint, request, redirect, flash, url_for
-from app.models import db, User, AgeStatus, GenderStatus
+from flask import Blueprint, jsonify, request
+from app.models import db, User
 
 users_bp = Blueprint('users', __name__)
 
-@users_bp.route('/users/signup', methods=['POST'])
-def signup_post():
-    """회원가입 처리"""
-    name = request.form.get('name')
-    email = request.form.get('email')
-    gender = request.form.get('gender')
-    age = request.form.get('age')
+@users_bp.route('/signup', methods=['POST'])
+def signup():
+    """사용자 회원가입 처리"""
+    data = request.get_json()
 
-    if not name or not email or not gender or not age:
-        flash("모든 항목을 입력해야 합니다.", "danger")
-        return redirect(url_for('routes.signup'))
+    # 필수 필드 추출
+    name = data.get("name")
+    email = data.get("email")
+    age = data.get("age")
+    gender = data.get("gender")
 
-    try:
-        age_enum = AgeStatus[age]
-        gender_enum = GenderStatus[gender]
-    except KeyError:
-        flash("잘못된 입력값입니다.", "danger")
-        return redirect(url_for('routes.signup'))
+    # 유효성 검사
+    if not name or not email or not age or not gender:
+        return jsonify({"error": "필수 입력값이 누락되었습니다."}), 400
 
-    if get_user(email):
-        flash("이미 가입된 이메일입니다.", "danger")
-        return redirect(url_for('routes.signup'))
+    # 이메일 중복 확인
+    existing_user = User.query.filter_by(email=email).first()
+    if existing_user:
+        return jsonify({"message": "이미 존재하는 계정 입니다."}), 409
 
-    user = User(name=name, email=email, gender=gender_enum, age=age_enum)
+    # 사용자 생성
+    new_user = User(name=name, email=email, age=age, gender=gender)
+    
+    # 데이터베이스 저장
+    db.session.add(new_user)
+    db.session.commit()
 
-    try:
-        db.session.add(user)
-        db.session.commit()
-        flash("회원가입이 완료되었습니다!", "success")
-        return redirect(url_for('routes.question', question_id=1))
-    except Exception as e:
-        db.session.rollback()
-        flash(f"회원가입 중 오류 발생: {str(e)}", "danger")
-        return redirect(url_for('routes.signup'))
-
-def get_user(email):
-    """이메일로 사용자 조회"""
-    return User.query.filter_by(email=email).first()
+    return jsonify({
+        "message": f"{name}님 회원가입을 축하합니다.",
+        "user_id": new_user.id
+    }), 200

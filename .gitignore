@@ -521,3 +521,4 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,pycharm+all,macos,windows,python,venv,flask,jetbrains
+oz_form/config.py
