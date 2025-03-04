@@ -6,6 +6,7 @@ from app.routes import routes
 from app.services.users import users_bp
 from app.services.questions import questions_blp
 from app.services.choices import choices_blp
+from app.services.answers import answers_blp
 from config import db
 
 migrate = Migrate()
@@ -33,6 +34,7 @@ def create_app():
     application.register_blueprint(users_bp)
     application.register_blueprint(questions_blp)
     application.register_blueprint(choices_blp)
+    application.register_blueprint(answers_blp)
 
 
     return application

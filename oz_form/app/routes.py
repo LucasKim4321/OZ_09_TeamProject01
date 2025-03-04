@@ -5,16 +5,17 @@ routes = Blueprint('routes', __name__)
 
 @routes.route('/')
 def index():
-    return render_template('index.html')
+    # return render_template('index.html')
+    return jsonify({"message": "Success Connect"}), 200
 
-@routes.route('/signup', methods=['GET', 'POST'])
-def signup():
-    return render_template('signup.html')
+# @routes.route('/signup', methods=['GET', 'POST'])
+# def signup():
+#     return render_template('signup.html')
 
-@routes.route('/question/<int:question_id>')
-def question(question_id):
-    return render_template('question.html', question_id=question_id)
+# @routes.route('/question/<int:question_id>')
+# def question(question_id):
+#     return render_template('question.html', question_id=question_id)
 
-@routes.route('/result')
-def result():
-    return render_template('result.html')
+# @routes.route('/result')
+# def result():
+#     return render_template('result.html')

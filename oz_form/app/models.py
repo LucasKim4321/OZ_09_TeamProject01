@@ -8,7 +8,7 @@ KST = ZoneInfo("Asia/Seoul")
 
 class CommonModel(db.Model):
     __abstract__ = True
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True) # Integer와 primary_key를 함께 설정하면 자동으로 auto increment 설정됨
     created_at = db.Column(
         db.DateTime, default=lambda: datetime.now(tz=KST), nullable=False
     )
@@ -77,8 +77,8 @@ class Image(CommonModel):
 class Question(CommonModel):
     __tablename__ = "questions"
     title = db.Column(db.String(100), nullable=False)
-    is_active = db.Column(db.Boolean, nullable=False, default=True)
-    sqe = db.Column(db.Integer, nullable=False)
+    is_active = db.Column(db.Boolean, nullable=False, default=True)  # 질문 활성화 여부
+    sqe = db.Column(db.Integer, nullable=False) # sqe(sequence) 순서
 
     image_id = db.Column(db.Integer, db.ForeignKey("images.id"), nullable=False)
 
