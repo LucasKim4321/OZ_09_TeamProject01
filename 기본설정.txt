@@ -1,0 +1,29 @@
+# .venv라는 이름의 가상환경을 생성 
+# 가상환경 설치 시, 경로에 유의하세요!
+python3 -m venv .venv
+
+# 가상환경 실행
+source .venv/bin/activate
+
+# pip3 버전 업그레이드
+pip3 install --upgrade pip
+
+# requirements.txt 파일에 작성된 패키지 설치
+pip3 install -r requirements.txt
+
+# 파일 생성
+touch run.py config.py wsgi.py form.conf
+
+# 디렉토리 생성 및 디렉토리 진입
+mkdir app && cd app
+
+# 파일 생성 
+touch __init__.py models.py routes.py
+
+# 디렉토리 생성 및 디렉토리 진입
+mkdir services && cd services
+
+# 파일 생성
+touch answers.py choices.py images.py questions.py users.py
+
+git clone https://github.com/LucasKim4321/OZ_09_TeamProject01
