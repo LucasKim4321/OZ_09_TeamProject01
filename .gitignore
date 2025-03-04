@@ -520,5 +520,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Prevent config.py from being tracked by Git
+config.py
+
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,pycharm+all,macos,windows,python,venv,flask,jetbrains
-oz_form/config.py
