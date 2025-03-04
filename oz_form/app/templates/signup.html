@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+    <style>
+        /* 전체 페이지 스타일 */
+        body {
+            font-family: 'Arial', sans-serif;
+            /*background: linear-gradient(to bottom, #89e6a5, #d1d8e0 45%, #d1d8e0 55%, #f4f4f4);*/
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        /* 중간 줄(띠, bar) 스타일 */
+        .middle-bar {
+            width: 100%;
+            height: 4cm;
+            background: #31802a;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        /* 회원가입 폼 컨테이너 */
+        .signup-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 350px;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        /* 입력 필드 스타일 */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-align: left;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        /* 버튼 스타일 */
+        .submit-btn {
+            background-color: #31802a;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="middle-bar"></div> <!-- 중간 바 추가 -->
+    
+    <div class="signup-container">
+        <h1>회원가입</h1>
+        <form action="/signup" method="post">
+            <div class="form-group">
+                <label for="name">이름</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">이메일</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="gender">성별</label>
+                <select id="gender" name="gender" required>
+                    <option value="">선택하세요</option>
+                    <option value="male">남성</option>
+                    <option value="female">여성</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="age">나이대</label>
+                <select id="age" name="age" required>
+                    <option value="">선택하세요</option>
+                    <option value="teen">10대</option>
+                    <option value="twenty">20대</option>
+                    <option value="thirty">30대</option>
+                    <option value="fourty">40대</option>
+                    <option value="fifty">50대+</option>
+                </select>
+            </div>
+
+            <button type="submit" class="submit-btn">가입</button>
+        </form>
+    </div>
+</body>
+</html>
