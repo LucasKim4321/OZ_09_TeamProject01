@@ -37,7 +37,9 @@ def signup():
             db.session.add(new_user)
             db.session.commit()
             flash("회원가입이 완료되었습니다!", "success")
-            return redirect(url_for('routes.index'))  # 메인 페이지로 이동
+
+            # 회원가입 완료 후 /question/1 페이지로 리디렉션
+            return redirect(url_for('routes.question', question_id=1))  
         except Exception as e:
             db.session.rollback()
             flash(f"회원가입 중 오류가 발생했습니다: {str(e)}", "danger")
@@ -45,9 +47,9 @@ def signup():
 
     return render_template('signup.html')
 
-@routes.route('/question')
-def question():
-    return render_template('question.html')
+@routes.route('/question/<int:question_id>')
+def question(question_id):
+    return render_template('question.html', question_id=question_id)
 
 @routes.route('/result')
 def result():
