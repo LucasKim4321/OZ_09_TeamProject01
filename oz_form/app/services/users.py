@@ -5,7 +5,6 @@ users_bp = Blueprint('users', __name__)
 
 @users_bp.route('/signup', methods=['POST'])
 def signup():
-    """사용자 회원가입 처리"""
     data = request.get_json()
 
     # 필수 필드 추출
