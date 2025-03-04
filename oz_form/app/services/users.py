@@ -23,8 +23,23 @@ def signup():
     if existing_user:
         return jsonify({"message": "이미 존재하는 계정 입니다."}), 409
 
+    # 연령대 변환
+    teen = "teen"
+    twenty = "twenty"
+    thirty = "thirty"
+    fourty = "fourty"
+    fifty = "fifty"
+    
+    age_group = (
+        teen if 0 <= age < 20 else
+        twenty if 20 <= age < 30 else
+        thirty if 30 <= age < 40 else
+        fourty if 40 <= age < 50 else
+        fifty
+    )
+    
     # 사용자 생성
-    new_user = User(name=name, email=email, age=age, gender=gender)
+    new_user = User(name=name, email=email, age=age_group, gender=gender)
     
     # 데이터베이스 저장
     db.session.add(new_user)
@@ -32,5 +47,6 @@ def signup():
 
     return jsonify({
         "message": f"{name}님 회원가입을 축하합니다.",
-        "user_id": new_user.id
+        "user_id": new_user.id,
+        "age_group": age_group
     }), 200
