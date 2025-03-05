@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from app.models import db, Question, Choices
+from app.models import db, Question
 from sqlalchemy import func
 
 questions_blp = Blueprint("questions", __name__)
@@ -11,17 +11,7 @@ def get_questions(question_id):
     # print(question)
 
     try:
-
-        choices = Choices.query.filter_byu(question_id = question_id).all()
-
-         #질문 데이터 포함
-        question_data = {
-             "id" : question_id,
-             "title " : question.title,
-             "image" : question.image.url if hasattr(question, "image")  and question.image else f"https://example.com/images/{question.image_id}.jpg",
-             "choices" : [choice.to_dict() for choice in choices] 
-         }
-        return jsonify(question_data)
+        return jsonify(question.to_dict())
     except AttributeError:
         return jsonify({"error":"invalid question data"}), 500
 
