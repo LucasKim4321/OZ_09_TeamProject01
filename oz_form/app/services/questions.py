@@ -11,7 +11,13 @@ def get_questions(question_id):
     # print(question)
 
     try:
-        return jsonify(question.to_dict())
+        return jsonify({
+            "id": question.id,
+            "title": question.title,
+            "is_active": question.is_active,
+            "sqe": question.sqe,
+            "image_id": question.image_id
+        })
     except AttributeError:
         return jsonify({"error":"invalid question data"}), 500
 

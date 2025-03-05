@@ -6,7 +6,12 @@ images = Blueprint('images', __name__)
 
 @images.route('/image/main', methods=['GET'])
 def get_main_image():
-    return jsonify({"image": "https://example.com/image.jpg"}), 200
+    main_image = Image.query.filter_by(type='main').first()
+    
+    if not main_image:
+        return jsonify({"error": "No main image found"}), 404
+    
+    return jsonify({"image": main_image.url}), 200
 
 @images.route('/image', methods=['POST'])
 def create_image():
