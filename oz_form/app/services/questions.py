@@ -5,7 +5,7 @@ from sqlalchemy import func
 questions_blp = Blueprint("questions", __name__)
 
 # 질문 가져오기
-@questions_blp.route("/question/<int:question_id>", methods=["GET"])
+@questions_blp.route("/questions/<int:question_id>", methods=["GET"])
 def get_questions(question_id):
     question = Question.query.get_or_404(question_id)
 
