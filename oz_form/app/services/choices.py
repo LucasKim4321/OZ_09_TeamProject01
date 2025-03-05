@@ -10,7 +10,11 @@ def get_choices(question_id):
     if not choices:
         return jsonify({"message": "선택지를 찾을 수 없습니다."}), 404
 
-    return jsonify([choice.to_dict() for choice in choices])
+    return jsonify({
+        "choices": [{
+            "id": choice.id, "content": choice.content, "is_active": choice.is_active
+            }for choice in choices]
+    })
 
 @choices_blp.route('/choice', methods=['POST'])
 def create_choice():
