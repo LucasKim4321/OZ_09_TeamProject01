@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from app.models import db, Question
+from app.models import db, Question, Choices
 from sqlalchemy import func
 
 questions_blp = Blueprint("questions", __name__)
@@ -8,18 +8,24 @@ questions_blp = Blueprint("questions", __name__)
 @questions_blp.route("/question/<int:question_id>", methods=["GET"])
 def get_questions(question_id):
     question = Question.query.get_or_404(question_id)
-    # print(question)
 
-    try:
-        return jsonify({
-            "id": question.id,
-            "title": question.title,
-            "is_active": question.is_active,
-            "sqe": question.sqe,
-            "image_id": question.image_id
-        })
-    except AttributeError:
-        return jsonify({"error":"invalid question data"}), 500
+    if not question :
+        return jsonify({"error" : "질문을 찾을 수 없습니다"}),404
+    
+    choices = Choices.query.filter_by(question_id=question_id).all()
+
+    choice_data = [{
+            "id": choice.id, "content": choice.content, "is_active": choice.is_active
+            }for choice in choices]
+    
+    return jsonify(
+        {
+            "id" : question.id,
+            "title" : question.title,
+            "image" : question.image.url if question.image else None,
+            "chocies" : choice_data,
+        }
+    )
 
 # 질문 개수 확인
 @questions_blp.route("/questions/count", methods=["GET"])
