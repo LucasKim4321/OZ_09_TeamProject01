@@ -1,31 +1,38 @@
 from flask import Blueprint, jsonify, request
 from app.models import db, Question, Choices
 from sqlalchemy import func
+from logging import abort
+logging.basicConfig(level=logging.DEBUG)
 
 questions_blp = Blueprint("questions", __name__)
 
 # 질문 가져오기
 @questions_blp.route("/questions/<int:question_id>", methods=["GET"])
+
 def get_questions(question_id):
     question = Question.query.get_or_404(question_id)
 
-    if not question :
-        return jsonify({"error" : "질문을 찾을 수 없습니다"}),404
-    
-    choices = Choices.query.filter_by(question_id=question_id).all()
+    try :
+        if not question :
+            return jsonify({"error" : "질문을 찾을 수 없습니다"}),404
+        
+        choices = Choices.query.filter_by(question_id=question_id).all()
 
-    choice_data = [{
-            "id": choice.id, "content": choice.content, "is_active": choice.is_active
-            }for choice in choices]
-    
-    return jsonify(
-        {
-            "id" : question.id,
-            "title" : question.title,
-            "image" : question.image.url if question.image else None,
-            "chocies" : choice_data,
-        }
-    )
+        choice_data = [{
+                "id": choice.id, "content": choice.content, "is_active": choice.is_active
+                }for choice in choices]
+        
+        return jsonify(
+            {
+                "id" : question.id,
+                "title" : question.title,
+                "image" : question.image.url if question.image else None,
+                "chocies" : choice_data,
+            }
+        )
+    except Exception as e:
+        logging.error(f"Error: {str(e)}")
+        abort(500,str(e))
 
 # 질문 개수 확인
 @questions_blp.route("/questions/count", methods=["GET"])
