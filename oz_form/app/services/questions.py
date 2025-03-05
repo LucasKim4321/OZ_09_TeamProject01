@@ -28,7 +28,7 @@ def get_questions(question_id):
                 "id" : question.id,
                 "title" : question.title,
                 "image" : question.image.url if question.image else None,
-                "chocies" : choice_data,
+                "choices" : choice_data,
             }
         )
     except Exception as e:
