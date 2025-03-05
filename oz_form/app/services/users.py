@@ -30,14 +30,14 @@ def signup():
         forty = "forty"  # 철자 수정
         fifty = "fifty"
     
-    age_group = (
-        teen if 0 <= age < 20 else
-        twenty if 20 <= age < 30 else
-        thirty if 30 <= age < 40 else
-        forty if 40 <= age < 50 else
-        fifty
-    )
-    
+        age_group = (
+            teen if 0 <= age < 20 else
+            twenty if 20 <= age < 30 else
+            thirty if 30 <= age < 40 else
+            forty if 40 <= age < 50 else
+            fifty
+        )
+        
     # 사용자 생성
     new_user = User(name=name, email=email, age=age_group, gender=gender)
     
