@@ -1,6 +1,6 @@
-from run import application  # Flask 애플리케이션을 가져옴
+from app import create_app
 
-app = application # Flask 애플리케이션 인스턴스 생성
+app = create_app()
 
-# if __name__ == "__main__":
-#     app.run(host="0.0.0.0", port=8000, debug=False)  # 로컬 실행용
+if __name__ == "__main__":
+    app.run(debug=True)
