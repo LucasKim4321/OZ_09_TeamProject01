@@ -22,21 +22,40 @@ def signup():
     if existing_user:
         return jsonify({"message": "이미 존재하는 계정 입니다."}), 409
     
-    # 연령대 변환
-    if age.isdigit():
-        teen = "teen"
-        twenty = "twenty"
-        thirty = "thirty"
-        forty = "forty"  # 철자 수정
-        fifty = "fifty"
+
+
+    # 유효한 연령대 문자열 집합
+    valid_age_groups = {"teen", "twenty", "thirty", "forty", "fifty"}
+    age_group = None
+    numeric_age = None
+
     
-        age_group = (
-            teen if 0 <= age < 20 else
-            twenty if 20 <= age < 30 else
-            thirty if 30 <= age < 40 else
-            forty if 40 <= age < 50 else
-            fifty
-        )
+      # age_input이 숫자(int) 또는 숫자 문자열일 경우 처리
+    if isinstance(age, int):
+        numeric_age = age
+    elif isinstance(age, str):
+        if age.isdigit():
+            numeric_age = int(age)
+        elif age.lower() in valid_age_groups:
+            # 프론트에서 이미 연령대 문자열("twenty" 등)으로 보낸 경우
+            age_group = age.lower()
+        else:
+            return jsonify({"error": "나이 데이터 형식이 올바르지 않습니다."}), 400
+    else:
+        return jsonify({"error": "나이 데이터 형식이 올바르지 않습니다."}), 400
+
+    # 숫자 형태의 나이가 있을 경우, 연령대 결정
+    if numeric_age is not None:
+        if 0 <= numeric_age < 20:
+            age_group = "teen"
+        elif 20 <= numeric_age < 30:
+            age_group = "twenty"
+        elif 30 <= numeric_age < 40:
+            age_group = "thirty"
+        elif 40 <= numeric_age < 50:
+            age_group = "forty"
+        else:
+            age_group = "fifty"
         
     # 사용자 생성
     new_user = User(name=name, email=email, age=age_group, gender=gender)
