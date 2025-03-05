@@ -17,23 +17,18 @@ def signup():
     if not name or not email or age is None or not gender:
         return jsonify({"error": "필수 입력값이 누락되었습니다."}), 400
 
-    # 나이 데이터 타입 변환
-    try:
-        age = int(age)
-    except ValueError:
-        return jsonify({"error": "나이는 숫자로 입력해주세요."}), 400
-
     # 이메일 중복 확인
     existing_user = User.query.filter_by(email=email).first()
     if existing_user:
         return jsonify({"message": "이미 존재하는 계정 입니다."}), 409
-
+    
     # 연령대 변환
-    teen = "teen"
-    twenty = "twenty"
-    thirty = "thirty"
-    forty = "forty"  # 철자 수정
-    fifty = "fifty"
+    if age.isdigit():
+        teen = "teen"
+        twenty = "twenty"
+        thirty = "thirty"
+        forty = "forty"  # 철자 수정
+        fifty = "fifty"
     
     age_group = (
         teen if 0 <= age < 20 else
