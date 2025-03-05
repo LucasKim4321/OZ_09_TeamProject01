@@ -33,5 +33,5 @@ def signup():
     return jsonify({
         "message": f"{name}님 회원가입을 축하합니다.",
         "user_id": new_user.id,
-        "age_group": age_group
+        "age": age
     }), 200
