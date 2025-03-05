@@ -58,7 +58,7 @@ def signup():
             age_group = "fifty"
         
     # 사용자 생성
-    new_user = User(name=name, email=email, age=age_group, gender=gender)
+    new_user = User(name=name, email=email, age=age, gender=gender)
     
     # 데이터베이스 저장
     db.session.add(new_user)
