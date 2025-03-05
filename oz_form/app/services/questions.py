@@ -1,7 +1,8 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, abort
 from app.models import db, Question, Choices
 from sqlalchemy import func
-from logging import abort
+import logging
+
 logging.basicConfig(level=logging.DEBUG)
 
 questions_blp = Blueprint("questions", __name__)
